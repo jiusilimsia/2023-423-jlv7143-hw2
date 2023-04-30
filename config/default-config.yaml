@@ -1,0 +1,25 @@
+run_config:
+  name: random-forest-featset-1
+  author: Michael Fedell
+  version: default
+  description: Classifies clouds into one of two types.
+  dependencies: requirements.txt
+  data_source: https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data
+
+generate_features:
+  calculate_norm_range:
+    IR_norm_range:
+      min_col: IR_min
+      max_col: IR_max
+      mean_col: IR_mean
+  log_transform:
+    log_entropy: visible_entropy
+  multiply:
+    entropy_x_contrast:
+      col_a: visible_contrast
+      col_b: visible_entropy
+
+aws:
+  upload: False
+  bucket_name: smf2659-clouds
+  prefix: experiments
