@@ -6,6 +6,9 @@ run_config:
   dependencies: requirements.txt
   data_source: https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data
 
+create_dataset:
+
+
 generate_features:
   calculate_norm_range:
     IR_norm_range:
@@ -18,6 +21,15 @@ generate_features:
     entropy_x_contrast:
       col_a: visible_contrast
       col_b: visible_entropy
+
+train_model:
+
+
+score_model:
+
+
+evaluate_performance:
+
 
 aws:
   upload: False
