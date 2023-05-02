@@ -86,3 +86,7 @@ def acquire_data(url: str, save_path: Path) -> None:
     except Exception as e:
         logger.error("Error occurred while trying to write dataset to file: %s", e)
         sys.exit(1)
+
+
+# Test Code ================================================================================================================
+acquire_data("https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data", Path("test_result_folder/clouds.data"))

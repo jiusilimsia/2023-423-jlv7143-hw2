@@ -5,11 +5,36 @@ run_config:
   description: Classifies clouds into one of two types.
   dependencies: requirements.txt
   data_source: https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data
+  output: artifacts
 
 create_dataset:
-
+  columns: 
+    - visible_mean
+    - visible_max
+    - visible_min
+    - visible_mean_distribution
+    - visible_contrast
+    - visible_entropy
+    - visible_second_angular_momentum
+    - IR_mean
+    - IR_max
+    - IR_min
+  path:
+    raw_data_path: "test_result_folder/clouds.data"
+    save_data_path: "test_result_folder/processed_data.csv"
+  cloud_data_index:
+    cloud1:
+      - 53
+      - 1077
+    cloud2:
+      - 1082
+      - 2105
 
 generate_features:
+  calculate_range:
+    IR_range:
+      min_col: IR_min
+      max_col: IR_max
   calculate_norm_range:
     IR_norm_range:
       min_col: IR_min
