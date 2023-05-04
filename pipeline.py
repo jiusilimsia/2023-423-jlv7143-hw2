@@ -60,7 +60,7 @@ if __name__ == "__main__":
     # Generate statistics and visualizations for summarizing the data; save to disk
     figures = artifacts / "figures"
     figures.mkdir()
-    eda.save_figures(features, figures)
+    eda.save_figures(features, figures, config["analysis"])  # <===================================
 
     # Split data into train/test set and train model based on config; save each to disk
     tmo, train, test = tm.train_model(features, config["train_model"])
