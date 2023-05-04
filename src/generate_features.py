@@ -1,6 +1,49 @@
+# import pandas as pd
+# import numpy as np
+
+
+# def generate_features(data: pd.DataFrame, config: dict) -> pd.DataFrame:
+#     """
+#     Generates features for a dataset using a configuration dictionary.
+    
+#     Args:
+#         data (pd.DataFrame): The input dataset.
+#         config (dict): A dictionary containing the feature generation configuration.
+        
+#     Returns:
+#         pd.DataFrame: The processed dataset with the new features and the target variable.
+#     """
+
+#     # Perform log transformation for specified columns in the configuration
+#     log_transform = config["log_transform"]
+#     for new_feature, col in log_transform.items():
+#         data[new_feature] = data[col].apply(np.log)
+
+#     # Perform multiplication for specified column pairs in the configuration
+#     multiply = config["multiply"]
+#     for new_feature, cols in multiply.items():
+#         data[new_feature] = data[cols["col_a"]].multiply(data[cols["col_b"]])
+
+#     # Calculate the range for specified columns in the configuration
+#     calculate_range = config["calculate_range"]
+#     for feature, cols in calculate_range.items():
+#         data[feature] = data[cols["max_col"]] - data[cols["min_col"]]
+
+#     # Calculate the normalized range for specified columns in the configuration
+#     calculate_norm_range = config["calculate_norm_range"]
+#     for new_feature, cols in calculate_norm_range.items():
+#         data[new_feature] = (data[cols["max_col"]] - data[cols["min_col"]]).divide(data[cols["mean_col"]])
+
+#     return data
+
+
 import pandas as pd
 import numpy as np
+import logging
 
+# Set up the logger
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 def generate_features(data: pd.DataFrame, config: dict) -> pd.DataFrame:
     """
@@ -14,30 +57,50 @@ def generate_features(data: pd.DataFrame, config: dict) -> pd.DataFrame:
         pd.DataFrame: The processed dataset with the new features and the target variable.
     """
 
-    # Perform log transformation for specified columns in the configuration
-    log_transform = config["log_transform"]
-    for new_feature, col in log_transform.items():
-        data[new_feature] = data[col].apply(np.log)
+    try:
+        # Perform log transformation for specified columns in the configuration
+        log_transform = config["log_transform"]
+        for new_feature, col in log_transform.items():
+            data[new_feature] = data[col].apply(np.log)
 
-    # Perform multiplication for specified column pairs in the configuration
-    multiply = config["multiply"]
-    for new_feature, cols in multiply.items():
-        data[new_feature] = data[cols["col_a"]].multiply(data[cols["col_b"]])
+        # Perform multiplication for specified column pairs in the configuration
+        multiply = config["multiply"]
+        for new_feature, cols in multiply.items():
+            data[new_feature] = data[cols["col_a"]].multiply(data[cols["col_b"]])
 
-    # Calculate the range for specified columns in the configuration
-    calculate_range = config["calculate_range"]
-    for feature, cols in calculate_range.items():
-        data[feature] = data[cols["max_col"]] - data[cols["min_col"]]
+        # Calculate the range for specified columns in the configuration
+        calculate_range = config["calculate_range"]
+        for feature, cols in calculate_range.items():
+            data[feature] = data[cols["max_col"]] - data[cols["min_col"]]
 
-    # Calculate the normalized range for specified columns in the configuration
-    calculate_norm_range = config["calculate_norm_range"]
-    for new_feature, cols in calculate_norm_range.items():
-        data[new_feature] = (data[cols["max_col"]] - data[cols["min_col"]]).divide(data[cols["mean_col"]])
+        # Calculate the normalized range for specified columns in the configuration
+        calculate_norm_range = config["calculate_norm_range"]
+        for new_feature, cols in calculate_norm_range.items():
+            data[new_feature] = (data[cols["max_col"]] - data[cols["min_col"]]).divide(data[cols["mean_col"]])
+
+        logger.info("Features generated successfully.")
+    except Exception as e:
+        logger.error(f"Error while generating features: {e}")
+        raise
 
     return data
 
 
+def save_dataset(data: pd.DataFrame, save_data_path: str):
+    """
+    Save the dataset to a CSV file.
 
+    Args:
+        data: A pandas DataFrame containing the dataset.
+        save_data_path: The path where the CSV file should be saved.
+    """
+
+    try:
+        data.to_csv(save_data_path, index=False)
+        logger.info(f"Dataset saved successfully at {save_data_path}")
+    except Exception as e:
+        logger.error(f"Error while saving the dataset: {e}")
+        raise
 
 
 
@@ -62,7 +125,7 @@ generate_features_config = config["generate_features"]
 
 # Call the function with the data and the configuration
 generated_data = generate_features(data, generate_features_config)
-cd.save_dataset(generated_data, "test_result_folder/generated_data.csv")
+save_dataset(generated_data, "test_result_folder/generated_data.csv")
 
 
 

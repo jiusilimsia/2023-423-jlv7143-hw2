@@ -20,8 +20,8 @@ create_dataset:
     - IR_max
     - IR_min
   path:
-    raw_data_path: "test_result_folder/clouds.data"
-    save_data_path: "test_result_folder/processed_data.csv"
+    raw_data_path: "test_result_folder/clouds.data"                 # Need modify!!
+    save_data_path: "test_result_folder/processed_data.csv"         # Need modify!!
   cloud_data_index:
     cloud1:
       - 53
@@ -47,14 +47,32 @@ generate_features:
       col_a: visible_contrast
       col_b: visible_entropy
 
+#analysis:
+
 train_model:
+  target: class
+  test_size: 0.4
+  initial_features:
+    - log_entropy
+    - IR_norm_range
+    - entropy_x_contrast
+  model_params:
+    n_estimators: 10
+    max_depth: 10
+
 
 
 score_model:
+  initial_features:
+    - log_entropy
+    - IR_norm_range
+    - entropy_x_contrast
 
 
 evaluate_performance:
-
+  prob_col: "predicted_probability"
+  bin_col: "predicted_binary"
+  target: "class"
 
 aws:
   upload: False

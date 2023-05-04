@@ -55,6 +55,7 @@ if __name__ == "__main__":
 
     # Enrich dataset with features for model training; save to disk
     features = gf.generate_features(data, config["generate_features"])
+    gf.save_dataset(features, "test_result_folder/generated_data.csv")  # <===================================
 
     # Generate statistics and visualizations for summarizing the data; save to disk
     figures = artifacts / "figures"

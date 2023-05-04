@@ -6,19 +6,12 @@ import requests
 
 
 from time import sleep
-import requests
 from requests.exceptions import RequestException
 
 
 logger = logging.getLogger(__name__)
 
 
-import requests
-import sys
-from time import sleep
-from pathlib import Path
-from requests.exceptions import RequestException
-import logging
 
 # Set up the logger
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
