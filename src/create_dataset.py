@@ -5,7 +5,7 @@ import logging
 
 # Set up the logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+
 
 def create_dataset(raw_data_path: str, config: dict):
     """
@@ -66,14 +66,14 @@ def save_dataset(data: pd.DataFrame, save_data_path: str):
 
 # Test Code ================================================================================================================
 
-import yaml
+# import yaml
 
-# Read the YAML configuration file
-with open("config/default-config.yaml", 'r') as file:
-    config = yaml.safe_load(file)
+# # Read the YAML configuration file
+# with open("config/default-config.yaml", 'r') as file:
+#     config = yaml.safe_load(file)
 
-# Create the dataset using the configuration values
-dataset = create_dataset(config["create_dataset"]["path"]["raw_data_path"], config["create_dataset"])
+# # Create the dataset using the configuration values
+# dataset = create_dataset(config["create_dataset"]["path"]["raw_data_path"], config["create_dataset"])
 
-# Save the dataset using the configuration values
-save_dataset(dataset, config["create_dataset"]["path"]["save_data_path"])
+# # Save the dataset using the configuration values
+# save_dataset(dataset, config["create_dataset"]["path"]["save_data_path"])

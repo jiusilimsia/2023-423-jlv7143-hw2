@@ -6,13 +6,13 @@ from pathlib import Path
 import yaml
 
 import src.acquire_data as ad
-import src.analysis as eda
-#import src.aws_utils as aws
-import src.create_dataset as cd
-import src.evaluate_performance as ep
-import src.generate_features as gf
-import src.score_model as sm
-import src.train_model as tm
+# import src.analysis as eda
+# import src.aws_utils as aws
+# import src.create_dataset as cd
+# import src.evaluate_performance as ep
+# import src.generate_features as gf
+# import src.score_model as sm
+# import src.train_model as tm
 
 logging.config.fileConfig("config/logging/local.conf")
 logger = logging.getLogger("clouds")

@@ -3,19 +3,11 @@ import sys
 import time
 from pathlib import Path
 import requests
-
-
 from time import sleep
 from requests.exceptions import RequestException
 
 
 logger = logging.getLogger(__name__)
-
-
-
-# Set up the logger
-#logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s")
-
 
 
 def get_data(url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2) -> bytes:
@@ -90,4 +82,4 @@ def acquire_data(url: str, save_path: Path) -> None:
 
 
 # Test Code ================================================================================================================
-acquire_data("https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data", Path("test_result_folder/clouds.data"))
+# acquire_data("https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data", Path("test_result_folder/clouds.data"))

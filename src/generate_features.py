@@ -4,7 +4,7 @@ import logging
 
 # Set up the logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+
 
 def generate_features(data: pd.DataFrame, config: dict) -> pd.DataFrame:
     """
@@ -69,24 +69,24 @@ def save_dataset(data: pd.DataFrame, save_data_path: str):
 
 # Test Code ================================================================================================================
 
-import yaml
-import create_dataset as cd
+# import yaml
+# import create_dataset as cd
 
-# Load the YAML configuration
-with open("config/default-config.yaml", 'r') as yaml_file:
-    config = yaml.safe_load(yaml_file)
+# # Load the YAML configuration
+# with open("config/default-config.yaml", 'r') as yaml_file:
+#     config = yaml.safe_load(yaml_file)
 
-# Example data
-file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/processed_data.csv"
-# Read the data from the CSV file into a pandas DataFrame
-data = pd.read_csv(file_path)
+# # Example data
+# file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/processed_data.csv"
+# # Read the data from the CSV file into a pandas DataFrame
+# data = pd.read_csv(file_path)
 
-# Extract the 'generate_features' configuration
-generate_features_config = config["generate_features"]
+# # Extract the 'generate_features' configuration
+# generate_features_config = config["generate_features"]
 
-# Call the function with the data and the configuration
-generated_data = generate_features(data, generate_features_config)
-save_dataset(generated_data, "test_result_folder/generated_data.csv")
+# # Call the function with the data and the configuration
+# generated_data = generate_features(data, generate_features_config)
+# save_dataset(generated_data, "test_result_folder/generated_data.csv")
 
 
 

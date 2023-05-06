@@ -5,8 +5,6 @@ from pathlib import Path
 
 # Set up the logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
-
 
 
 def score_model(test: pd.DataFrame, model, config: dict) -> pd.DataFrame:
@@ -60,19 +58,19 @@ def save_scores(scores: pd.DataFrame, file_path: str):
 
 # Test Code ================================================================================================================
 
-import yaml
-with open("config/default-config.yaml", 'r') as file:
-    config = yaml.safe_load(file)
+# import yaml
+# with open("config/default-config.yaml", 'r') as file:
+#     config = yaml.safe_load(file)
 
 
-test_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/test.csv"
-test = pd.read_csv(test_file_path)
+# test_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/test.csv"
+# test = pd.read_csv(test_file_path)
 
-import pickle
-model_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/model.pkl"
-with open(model_file_path, 'rb') as f:
-    model = pickle.load(f)
+# import pickle
+# model_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/model.pkl"
+# with open(model_file_path, 'rb') as f:
+#     model = pickle.load(f)
 
 
-score_df = score_model(test, model, config['score_model'])
-save_scores(score_df, "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/scores.csv")
+# score_df = score_model(test, model, config['score_model'])
+# save_scores(score_df, "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/scores.csv")

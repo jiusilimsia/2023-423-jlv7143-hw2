@@ -1,16 +1,14 @@
 import logging
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import pandas as pd
-
 from cycler import cycler
 
 
 # Set up the logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+
 
 def save_figures(data: pd.DataFrame, dir: Path, config: dict) -> list[Path]:
     """Saves histograms of features in the given data to the specified directory.
@@ -62,13 +60,13 @@ def save_figures(data: pd.DataFrame, dir: Path, config: dict) -> list[Path]:
 
 # Test Code ================================================================================================================
 
-import yaml
-# Load the YAML configuration
-with open("config/default-config.yaml", 'r') as yaml_file:
-    config = yaml.safe_load(yaml_file)
+# import yaml
+# # Load the YAML configuration
+# with open("config/default-config.yaml", 'r') as yaml_file:
+#     config = yaml.safe_load(yaml_file)
 
-file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/generated_data.csv"
-# Read the data from the CSV file into a pandas DataFrame
-data = pd.read_csv(file_path)
+# file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/generated_data.csv"
+# # Read the data from the CSV file into a pandas DataFrame
+# data = pd.read_csv(file_path)
 
-save_figures(data, Path("test_result_folder/figures/"), config['analysis'])
+# save_figures(data, Path("test_result_folder/figures/"), config['analysis'])
