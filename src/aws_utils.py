@@ -2,6 +2,10 @@ from pathlib import Path
 
 import boto3
 
+import logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
 
 def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
     """Upload all the artifacts in the specified directory to S3

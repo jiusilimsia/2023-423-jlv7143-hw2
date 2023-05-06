@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 # Set up the logger
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger(__name__)
+#logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s")
+
 
 
 def get_data(url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2) -> bytes:
@@ -37,6 +37,7 @@ def get_data(url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2)
         try:
             response = requests.get(url)
             response.raise_for_status()
+            logger.debug("Acquire data from web successfully")
             return response.content
         except RequestException as e:
             if attempt < attempts - 1:
@@ -57,9 +58,17 @@ def write_data(url_contents: bytes, save_path: Path) -> None:
     Raises:
         FileNotFoundError: If the specified path does not exist.
     """
-    save_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(save_path, "wb") as file:
-        file.write(url_contents)
+    try:
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(save_path, "wb") as file:
+            file.write(url_contents)
+        logger.info("Data written to %s successfully", save_path)
+    except FileNotFoundError as e:
+        logger.error("Error writing data to %s: %s", save_path, e)
+        raise
+    except Exception as e:
+        logger.error("Error writing data to %s: %s", save_path, e)
+        raise
 
 
 def acquire_data(url: str, save_path: Path) -> None:
@@ -72,7 +81,6 @@ def acquire_data(url: str, save_path: Path) -> None:
     url_contents = get_data(url)
     try:
         write_data(url_contents, save_path)
-        logger.info("Data written to %s", save_path)
     except FileNotFoundError:
         logger.error("Please provide a valid file location to save dataset to.")
         sys.exit(1)

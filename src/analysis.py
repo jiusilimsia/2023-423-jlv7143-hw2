@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import pandas as pd
 
+from cycler import cycler
+
+
 # Set up the logger
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
