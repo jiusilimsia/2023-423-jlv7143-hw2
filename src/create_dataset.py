@@ -1,4 +1,3 @@
-import yaml
 import pandas as pd
 import numpy as np
 import logging
@@ -25,6 +24,7 @@ def create_dataset(raw_data_path: str, config: dict):
 
         with open(raw_data_path, 'r') as f:
             data = [[s for s in line.split(' ') if s != ''] for line in f.readlines()]
+        logger.debug("Data read successfully.")
 
         first_cloud = data[cloud_data_index["cloud1"][0]:cloud_data_index["cloud1"][1]]
         first_cloud = [[float(s.replace('/n', '')) for s in cloud] for cloud in first_cloud]
@@ -38,8 +38,18 @@ def create_dataset(raw_data_path: str, config: dict):
 
         combined_data = pd.concat([first_cloud, second_cloud])
         logger.info("Dataset created successfully.")
+
+    except FileNotFoundError as e:
+        logger.error("Error opening the raw data file: File not found %s", e)
+        raise
+    except IOError as e:
+        logger.error("Error reading the raw data file: %s", e)
+        raise
+    except KeyError as e:
+        logger.error("Error in the configuration: Missing key %s", e)
+        raise
     except Exception as e:
-        logger.error(f"Error while creating the dataset: {e}")
+        logger.error("Error while creating the dataset: %s", e)
         raise
 
     return combined_data
@@ -55,9 +65,15 @@ def save_dataset(data: pd.DataFrame, save_data_path: str):
 
     try:
         data.to_csv(save_data_path, index=False)
-        logger.info(f"Dataset saved successfully at {save_data_path}")
+        logger.info("Dataset saved successfully at %s", save_data_path)
+    except FileNotFoundError as e:
+        logger.error("Error while saving the dataset: File path not found: %s", save_data_path)
+        raise
+    except PermissionError as e:
+        logger.error("Error while saving the dataset: Permission denied for file path: %s", save_data_path)
+        raise
     except Exception as e:
-        logger.error(f"Error while saving the dataset: {e}")
+        logger.error("Error while saving the dataset: %s", e)
         raise
 
 

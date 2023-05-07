@@ -37,9 +37,6 @@ create_dataset:
   - IR_mean
   - IR_max
   - IR_min
-  path:
-    raw_data_path: test_result_folder/clouds.data
-    save_data_path: test_result_folder/processed_data.csv
 evaluate_performance:
   bin_col: predicted_binary
   prob_col: predicted_probability

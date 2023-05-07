@@ -26,9 +26,13 @@ def evaluate_performance(scores: pd.DataFrame, y_true: pd.Series, config: dict) 
         ypred_bin = scores[config["bin_col"]]
 
         auc = sklearn.metrics.roc_auc_score(y_true, ypred_proba)
+        logger.debug("AUC calculated.")
         confusion = sklearn.metrics.confusion_matrix(y_true, ypred_bin)
+        logger.debug("Confusion matrix calculated.")
         accuracy = sklearn.metrics.accuracy_score(y_true, ypred_bin)
+        logger.debug("Accuracy calculated.")
         classification_report = sklearn.metrics.classification_report(y_true, ypred_bin)
+        logger.debug("Classification report calculated.")
 
         metrics = {
             "AUC": auc,
@@ -61,11 +65,12 @@ def save_metrics(metrics: dict, file_path: Path):
         with open(file_path, 'w') as f:
             yaml.dump(metrics, f, default_flow_style=False)
         logger.info(f"Metrics saved successfully at {file_path}")
+    except FileNotFoundError as e:
+        logger.error("Error while saving the metrics: %s", e)
+        raise
     except Exception as e:
         logger.error(f"Error while saving metrics: {e}")
         raise
-
-
 
 
 

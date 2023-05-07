@@ -34,9 +34,11 @@ def train_model(data: pd.DataFrame, config: dict):
         # Split data into train/test set and train model based on config
         X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
             X, y, test_size=test_size)
+        logger.debug("Train test split finished")
 
         model = sklearn.ensemble.RandomForestClassifier(**model_params)
         model.fit(X_train[initial_features], y_train)
+        logger.debug("Model training finished")
 
         # Combine X_train and y_train into a single DataFrame
         train_df = X_train.copy()
@@ -46,9 +48,17 @@ def train_model(data: pd.DataFrame, config: dict):
         test_df = X_test.copy()
         test_df[target] = y_test
 
+        logger.info("Model training finished, train and test data generated")
         return model, train_df, test_df
+    
+    except KeyError as e:
+        logger.error("Missing key in the configuration: %s", e)
+        raise
+    except ValueError as e:
+        logger.error("Invalid value encountered: %s", e)
+        raise
     except Exception as e:
-        logger.error(f"Error while training the model: {e}")
+        logger.error("Error while training the model: %s", e)
         raise
 
 
@@ -65,9 +75,13 @@ def save_data(train: pd.DataFrame, test: pd.DataFrame, artifacts: Path):
         train.to_csv(artifacts / "train.csv", index=False)
         test.to_csv(artifacts / "test.csv", index=False)
         logger.info("Train and test data saved successfully.")
-    except Exception as e:
-        logger.error(f"Error while saving train and test data: {e}")
+    except FileNotFoundError as e:
+        logger.error("Error while saving train and test data: %s", e)
         raise
+    except Exception as e:
+        logger.error("Unexpected error while saving train and test data: %s", e)
+        raise
+
 
 def save_model(model, file_path: Path):
     """
@@ -80,10 +94,17 @@ def save_model(model, file_path: Path):
     try:
         with open(file_path, "wb") as f:
             pickle.dump(model, f)
-        logger.info(f"Model saved successfully at {file_path}")
-    except Exception as e:
-        logger.error(f"Error while saving the model: {e}")
+        logger.info("Model saved successfully at %s", file_path)
+    except FileNotFoundError as e:
+        logger.error("Error while saving the model: %s", e)
         raise
+    except pickle.PicklingError as e:
+        logger.error("Error while pickling the model: %s", e)
+        raise
+    except Exception as e:
+        logger.error("Unexpected error while saving the model: %s", e)
+        raise
+
 
 
 

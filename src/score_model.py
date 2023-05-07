@@ -30,8 +30,11 @@ def score_model(test: pd.DataFrame, model, config: dict) -> pd.DataFrame:
                                'predicted_binary': ypred_bin_test})
         logger.info("Model scored successfully.")
         return scores
+    except KeyError as e:
+        logger.error("Error while scoring the model due to missing key in config: %s", e)
+        raise
     except Exception as e:
-        logger.error(f"Error while scoring the model: {e}")
+        logger.error("Unexpected error while scoring the model: %s", e)
         raise
 
 
@@ -47,10 +50,12 @@ def save_scores(scores: pd.DataFrame, file_path: str):
     try:
         scores.to_csv(file_path, index=False)
         logger.info(f"Scores saved successfully at {file_path}")
-    except Exception as e:
-        logger.error(f"Error while saving the scores: {e}")
+    except FileNotFoundError as e:
+        logger.error("Error while saving the scores: %s", e)
         raise
-
+    except Exception as e:
+        logger.error("Unexpected error while saving the scores: %s", e)
+        raise
 
 
 
