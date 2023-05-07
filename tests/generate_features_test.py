@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -96,7 +95,7 @@ def test_generate_features_log_transform():
 # Unhappy path
 def test_generate_features_log_transform_wrong_key():
     with pytest.raises(KeyError):
-            gf.log_transform(df_in, config_keyError['log_transform'])
+        gf.log_transform(df_in, config_keyError['log_transform'])
 
 # Unit tests for interactions on entropy and contrast feature =======================================
 # Happy path
@@ -108,7 +107,7 @@ def test_generate_features_multiply():
 # Unhappy path
 def test_generate_features_multiply_wrong_key():
     with pytest.raises(KeyError):
-            gf.multiply(df_in, config_keyError['multiply'])
+        gf.multiply(df_in, config_keyError['multiply'])
 
 # Unit tests for range calculation on IR feature =======================================
 # Happy path
@@ -120,7 +119,7 @@ def test_generate_features_calculate_range():
 # Unhappy path
 def test_generate_features_calculate_range_wrong_key():
     with pytest.raises(KeyError):
-            gf.calculate_range(df_in, config_keyError['calculate_range'])
+        gf.calculate_range(df_in, config_keyError['calculate_range'])
 
 # Unit tests for normalized range calculation on IR feature =======================================
 # Happy path
@@ -132,4 +131,4 @@ def test_generate_features_calculate_norm_range():
 # Unhappy path
 def test_generate_features_calculate_norm_range_wrong_key():
     with pytest.raises(KeyError):
-            gf.calculate_norm_range(df_in, config_keyError['calculate_norm_range'])
+        gf.calculate_norm_range(df_in, config_keyError['calculate_norm_range'])

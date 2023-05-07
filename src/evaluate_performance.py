@@ -8,13 +8,13 @@ import yaml
 logger = logging.getLogger(__name__)
 
 
-def evaluate_performance(scores: pd.DataFrame, y_true: pd.Series, config: dict) -> dict:
+def evaluate_performance(scores: pd.DataFrame, test: pd.DataFrame, config: dict) -> dict:
     """
     Evaluates the performance of a model based on the provided scores and configuration.
 
     Args:
         scores: A DataFrame containing the predicted probabilities and binary predictions.
-        y_true: A pandas Series containing the true labels for the test data.
+        test: A pandas DataFrame containing the test data.
         config: A dictionary containing the configuration parameters for evaluation.
 
     Returns:
@@ -22,6 +22,7 @@ def evaluate_performance(scores: pd.DataFrame, y_true: pd.Series, config: dict) 
     """
 
     try:
+        y_true = test[config["target"]]
         ypred_proba = scores[config["prob_col"]]
         ypred_bin = scores[config["bin_col"]]
 

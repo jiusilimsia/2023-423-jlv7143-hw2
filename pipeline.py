@@ -57,16 +57,12 @@ if __name__ == "__main__":
 
     # Enrich dataset with features for model training; save to disk
     features = gf.generate_features(data, config["generate_features"])
-    gf.save_dataset(
-        features, artifacts / "cloud_cleaned.csv"
-    )  # <===================================
+    gf.save_dataset(features, artifacts / "cloud_cleaned.csv")  # <===================================
 
     # Generate statistics and visualizations for summarizing the data; save to disk
     figures = artifacts / "figures"
     figures.mkdir()
-    eda.save_figures(
-        features, figures, config["analysis"]
-    )  # <===================================
+    eda.save_figures(features, figures, config["analysis"])  # <===================================
 
     # Split data into train/test set and train model based on config; save each to disk
     tmo, train, test = tm.train_model(features, config["train_model"])
@@ -78,11 +74,7 @@ if __name__ == "__main__":
     sm.save_scores(scores, artifacts / "scores.csv")
 
     # Evaluate model performance metrics; save metrics to disk
-    metrics = ep.evaluate_performance(
-        scores,
-        test[config["evaluate_performance"]["target"]],
-        config["evaluate_performance"],
-    )  # <===================================
+    metrics = ep.evaluate_performance(scores, test, config["evaluate_performance"],)  # <===================================
     ep.save_metrics(metrics, artifacts / "metrics.yaml")
 
     # # Upload all artifacts to S3
