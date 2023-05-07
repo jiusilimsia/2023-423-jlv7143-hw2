@@ -7,3 +7,4 @@ models/*
 !.gitkeep
 *.pyc
 .pytest_cache/
+.venv

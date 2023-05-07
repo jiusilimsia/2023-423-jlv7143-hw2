@@ -10,9 +10,7 @@ from requests.exceptions import RequestException
 logger = logging.getLogger(__name__)
 
 
-def get_data(
-    url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2
-) -> bytes:
+def get_data(url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2) -> bytes:
     """Acquires data from URL
 
     Args:
@@ -32,12 +30,15 @@ def get_data(
             response = requests.get(url)
             response.raise_for_status()
             logger.debug("Acquire data from web successfully")
-            return response.content
+
         except RequestException as e:
             if attempt < attempts - 1:
                 logger.warning(
                     "Error downloading data (attempt %d/%d): %s",
-                    attempt + 1, attempts, e,)
+                    attempt + 1,
+                    attempts,
+                    e,
+                )
                 sleep(wait)
                 wait *= wait_multiple
             else:
@@ -48,6 +49,8 @@ def get_data(
                     "Failed to download data from %s after %s attempts"
                     % (url, attempts)
                 ) from e
+
+        return response.content
 
 
 def write_data(url_contents: bytes, save_path: Path) -> None:

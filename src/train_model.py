@@ -1,9 +1,10 @@
-import pandas as pd
+import logging
+from pathlib import Path
 import pickle
+import pandas as pd
 import sklearn.model_selection
 import sklearn.ensemble
-from pathlib import Path
-import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -104,29 +105,3 @@ def save_model(model, file_path: Path):
     except Exception as e:
         logger.error("Unexpected error while saving the model: %s", e)
         raise
-
-
-
-
-
-
-
-# Test Code ================================================================================================================
-
-# file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/generated_data.csv"
-# # Read the data from the CSV file into a pandas DataFrame
-# data = pd.read_csv(file_path)
-
-# import yaml
-# # Read the YAML configuration file
-# with open("config/default-config.yaml", 'r') as file:
-#     config = yaml.safe_load(file)
-
-
-
-# model_config = config['train_model']
-# model, train_df, test_df = train_model(data, model_config)
-
-
-# save_data(train_df, test_df, Path("/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models"))
-# save_model(model, Path("/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/model.pkl"))

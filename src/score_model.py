@@ -1,6 +1,5 @@
-import pandas as pd
 import logging
-from pathlib import Path
+import pandas as pd
 
 
 # Set up the logger
@@ -26,8 +25,8 @@ def score_model(test: pd.DataFrame, model, config: dict) -> pd.DataFrame:
         ypred_proba_test = model.predict_proba(test[initial_features])[:, 1]
         ypred_bin_test = model.predict(test[initial_features])
 
-        scores = pd.DataFrame({'predicted_probability': ypred_proba_test,
-                               'predicted_binary': ypred_bin_test})
+        scores = pd.DataFrame({"predicted_probability": ypred_proba_test,
+                               "predicted_binary": ypred_bin_test})
         logger.info("Model scored successfully.")
         return scores
     except KeyError as e:
@@ -49,33 +48,10 @@ def save_scores(scores: pd.DataFrame, file_path: str):
 
     try:
         scores.to_csv(file_path, index=False)
-        logger.info(f"Scores saved successfully at {file_path}")
+        logger.info("Scores saved successfully at %s", file_path)
     except FileNotFoundError as e:
         logger.error("Error while saving the scores: %s", e)
         raise
     except Exception as e:
         logger.error("Unexpected error while saving the scores: %s", e)
         raise
-
-
-
-
-
-# Test Code ================================================================================================================
-
-# import yaml
-# with open("config/default-config.yaml", 'r') as file:
-#     config = yaml.safe_load(file)
-
-
-# test_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/test.csv"
-# test = pd.read_csv(test_file_path)
-
-# import pickle
-# model_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/model.pkl"
-# with open(model_file_path, 'rb') as f:
-#     model = pickle.load(f)
-
-
-# score_df = score_model(test, model, config['score_model'])
-# save_scores(score_df, "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/scores.csv")

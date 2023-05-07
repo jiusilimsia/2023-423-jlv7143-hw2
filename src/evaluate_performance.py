@@ -43,7 +43,7 @@ def evaluate_performance(scores: pd.DataFrame, y_true: pd.Series, config: dict) 
         logger.info("Performance evaluation completed successfully.")
         return metrics
     except Exception as e:
-        logger.error(f"Error while evaluating performance: {e}")
+        logger.error("Error while evaluating performance: %s", e)
         raise
 
 
@@ -64,33 +64,10 @@ def save_metrics(metrics: dict, file_path: Path):
 
         with open(file_path, 'w') as f:
             yaml.dump(metrics, f, default_flow_style=False)
-        logger.info(f"Metrics saved successfully at {file_path}")
+        logger.info("Metrics saved successfully at %s", file_path)
     except FileNotFoundError as e:
         logger.error("Error while saving the metrics: %s", e)
         raise
     except Exception as e:
-        logger.error(f"Error while saving metrics: {e}")
+        logger.error("Error while saving metrics: %s", e)
         raise
-
-
-
-
-
-
-# Test Code ================================================================================================================
-
-# import yaml
-# # Load the YAML configuration
-# with open("config/default-config.yaml", 'r') as yaml_file:
-#     config = yaml.safe_load(yaml_file)
-
-# # Example data
-# score_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/scores.csv"
-# # Read the data from the CSV file into a pandas DataFrame
-# scores = pd.read_csv(score_file_path)
-
-# test_file_path = "/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/test.csv"
-# test = pd.read_csv(test_file_path)
-
-# metrics = evaluate_performance(scores, test[config['evaluate_performance']['target']], config['evaluate_performance'])
-# save_metrics(metrics, Path("/Users/lijiusi/Documents/2. 研究生/3. Spring Quarter/MSiA423 Cloud Engineering/Homework/hw2/CloudAssignment2_JiusiLi/test_result_folder/models/metrics.yaml"))
