@@ -23,3 +23,9 @@ docker build ...
 ```bash
 docker run ...
 ```
+
+
+
+
+
+aws: export AWS_PROFILE=<your_aws_profile_name_here>

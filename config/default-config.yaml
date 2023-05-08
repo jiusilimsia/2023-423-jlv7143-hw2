@@ -87,6 +87,8 @@ evaluate_performance:
   target: "class"
 
 aws:
-  upload: False
-  bucket_name: smf2659-clouds
+  upload: True
+  bucket_name: jlv7143-clouds
   prefix: experiments
+
+

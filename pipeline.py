@@ -77,7 +77,7 @@ if __name__ == "__main__":
     metrics = ep.evaluate_performance(scores, test, config["evaluate_performance"],)  # <===================================
     ep.save_metrics(metrics, artifacts / "metrics.yaml")
 
-    # # Upload all artifacts to S3
-    # aws_config = config.get("aws")
-    # if aws_config.get("upload", False):
-    #     aws.upload_artifacts(artifacts, aws_config)
+    # Upload all artifacts to S3
+    aws_config = config.get("aws")
+    if aws_config.get("upload", False):
+        aws.upload_artifacts(artifacts, aws_config)

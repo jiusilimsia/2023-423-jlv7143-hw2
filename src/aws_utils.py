@@ -1,15 +1,15 @@
+import os
+import boto3
+import logging
 from pathlib import Path
 
-import boto3
 
-import logging
 logger = logging.getLogger(__name__)
 
 
 def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
     """Upload all the artifacts in the specified directory to S3
 
-
     Args:
         artifacts: Directory containing all the artifacts from a given experiment
         config: Config required to upload artifacts to S3; see example config file for structure
@@ -17,52 +17,45 @@ def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
     Returns:
         List of S3 uri's for each file that was uploaded
     """
-    raise NotImplementedError
+    # Retrieve the S3 configuration from the config dictionary
+    upload = config["upload"]
+    bucket_name = config["bucket_name"]
+    prefix = config["prefix"]
 
+    # If the upload flag is set to False, skip the upload process
+    if not upload:
+        logging.info("Upload is disabled in the configuration.")
+        return []
 
+    # Create a boto3 session and S3 client
+    session = boto3.Session()
+    s3 = session.client("s3")
 
-
-
-
-
-
-def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
-    """Upload all the artifacts in the specified directory to S3
-
-    Args:
-        artifacts: Directory containing all the artifacts from a given experiment
-        config: Config required to upload artifacts to S3; see example config file for structure
-
-    Returns:
-        List of S3 uri's for each file that was uploaded
-    """
-    s3 = boto3.client("s3", **config)
+    # Initialize a list to store the S3 URIs of the uploaded files
+    uploaded_uris = []
 
     try:
-        s3_uri_prefix = config["s3_uri_prefix"].strip("/")
-        bucket_name = config["bucket_name"]
-        bucket_prefix = config.get("bucket_prefix", "").strip("/")
+        # Iterate through all files in the artifacts directory
+        for root, _, files in os.walk(artifacts):
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Create the S3 key by replacing the local artifacts path with the prefix
+                s3_key = prefix + file_path.replace(str(artifacts), "", 1).lstrip(os.sep)
 
-        # Get a list of all files in the artifacts directory
-        artifact_files = list(artifacts.glob("**/*"))
+                
+                # Upload the file to S3
+                s3.upload_file(Filename=file_path, Bucket=bucket_name, Key=s3_key)
 
-        # Upload each file to S3
-        s3_uris = []
-        for file_path in artifact_files:
-            # Skip directories
-            if file_path.is_dir():
-                continue
+                # Add the uploaded file's S3 URI to the list
+                uploaded_uri = "s3://%s/%s" % (bucket_name, s3_key)
+                uploaded_uris.append(uploaded_uri)
 
-            # Get the S3 key by stripping the artifacts directory and joining with the S3 prefix and bucket prefix
-            s3_key = str(file_path.relative_to(artifacts)).replace("\\", "/")
-            s3_uri = f"s3://{bucket_name}/{bucket_prefix}/{s3_key}".strip("/")
-            s3.upload_file(str(file_path), bucket_name, f"{bucket_prefix}/{s3_key}")
+                logging.debug("Successfully uploaded %s to %s", file_path, uploaded_uri)
 
-            s3_uris.append(s3_uri)
-            logger.debug(f"{file_path} uploaded to S3 as {s3_uri}")
-
-        logger.info(f"Uploaded {len(s3_uris)} files to S3 under s3://{bucket_name}/{bucket_prefix}")
-        return s3_uris
     except Exception as e:
-        logger.error(f"Error uploading artifacts to S3: {e}")
-        raise
+        logging.error("Failed to upload files: %s", str(e))
+        return []
+
+    logging.info("All files have been uploaded successfully.")
+
+    return uploaded_uris
