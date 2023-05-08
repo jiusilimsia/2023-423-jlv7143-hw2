@@ -24,7 +24,7 @@ def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
 
     # If the upload flag is set to False, skip the upload process
     if not upload:
-        logging.info("Upload is disabled in the configuration.")
+        logger.info("Upload is disabled in the configuration.")
         return []
 
     # Create a boto3 session and S3 client
@@ -50,12 +50,12 @@ def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
                 uploaded_uri = "s3://%s/%s" % (bucket_name, s3_key)
                 uploaded_uris.append(uploaded_uri)
 
-                logging.debug("Successfully uploaded %s to %s", file_path, uploaded_uri)
+                logger.debug("Successfully uploaded %s to %s", file_path, uploaded_uri)
 
     except Exception as e:
-        logging.error("Failed to upload files: %s", str(e))
+        logger.error("Failed to upload files: %s", str(e))
         return []
 
-    logging.info("All files have been uploaded successfully.")
+    logger.info("All files have been uploaded successfully.")
 
     return uploaded_uris

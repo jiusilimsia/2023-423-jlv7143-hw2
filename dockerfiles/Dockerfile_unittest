@@ -1,9 +1,11 @@
-FROM python:3.9.4
+FROM python:3.10.9
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY requirements_unittest.txt .
+RUN pip install -r requirements_unittest.txt
 
-COPY test/ .
+COPY src src/
+COPY tests tests/
 
+CMD ["pytest"]
