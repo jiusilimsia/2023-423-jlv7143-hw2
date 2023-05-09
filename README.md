@@ -59,7 +59,31 @@ To retrieve the code of the project, you need to clone the repository using the 
 git clone https://github.com/MSIA/2023-423-jlv7143-hw2.git
 ```
 
-The setup process for running the project (installing requirements, fetching data, etc.), refer to the **Docker image and container** section.
+### To run the pipeline in your local machine:
+
+- First login to refresh credentials
+
+    ```shell
+    aws sso login --profile <your_aws_profile_name>
+    ```
+
+- Then set up our python environment
+
+    ```shell
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
+
+- Finally authenticate your boto3 calls and run the pipeline with the command below:
+
+    ```shell
+    export AWS_PROFILE=<your_aws_profile_name>
+    python app.py
+    ```
+
+For the setup process for running the project (installing requirements, fetching data, etc.) in a Docker container, refer to the **Docker image and container** section.
+
 
 
 ## Docker Image and Container
