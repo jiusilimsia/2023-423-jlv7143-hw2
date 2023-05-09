@@ -7,7 +7,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 
-def create_dataset(raw_data_path: str, config: dict):
+def create_dataset(raw_data_path: str, config: dict) -> pd.DataFrame:
     """
     Create a dataset from the raw data.
 
@@ -70,13 +70,13 @@ def save_dataset(data: pd.DataFrame, save_data_path: str):
         logger.info("Dataset saved successfully at %s", save_data_path)
     except FileNotFoundError as e:
         logger.error(
-            "Error while saving the dataset: File path not found: %s", save_data_path
+            "Error while saving the dataset: File path not found: %s: %s", save_data_path, e
         )
         raise
     except PermissionError as e:
         logger.error(
-            "Error while saving the dataset: Permission denied for file path: %s",
-            save_data_path,
+            "Error while saving the dataset: Permission denied for file path: %s: %s",
+            save_data_path, e
         )
         raise
     except Exception as e:

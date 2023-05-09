@@ -1,7 +1,7 @@
 import os
-import boto3
 import logging
 from pathlib import Path
+import boto3
 
 
 logger = logging.getLogger(__name__)
@@ -40,9 +40,10 @@ def upload_artifacts(artifacts: Path, config: dict) -> list[str]:
             for file in files:
                 file_path = os.path.join(root, file)
                 # Create the S3 key by replacing the local artifacts path with the prefix
-                s3_key = prefix + file_path.replace(str(artifacts), "", 1).lstrip(os.sep)
+                s3_key = prefix + file_path.replace(str(artifacts), "", 1).lstrip(
+                    os.sep
+                )
 
-                
                 # Upload the file to S3
                 s3.upload_file(Filename=file_path, Bucket=bucket_name, Key=s3_key)
 

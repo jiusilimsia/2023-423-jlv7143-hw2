@@ -1,7 +1,7 @@
-import pandas as pd
-import sklearn.metrics
 import logging
 from pathlib import Path
+import pandas as pd
+import sklearn.metrics
 import yaml
 
 # Set up the logger
@@ -63,7 +63,7 @@ def save_metrics(metrics: dict, file_path: Path):
         metrics["Accuracy"] = float(metrics["Accuracy"])
         metrics["Confusion Matrix"] = metrics["Confusion Matrix"]
 
-        with open(file_path, 'w') as f:
+        with open(file_path, "w") as f:
             yaml.dump(metrics, f, default_flow_style=False)
         logger.info("Metrics saved successfully at %s", file_path)
     except FileNotFoundError as e:

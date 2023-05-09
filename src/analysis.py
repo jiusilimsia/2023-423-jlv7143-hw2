@@ -3,7 +3,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import pandas as pd
-from cycler import cycler
+
+# from cycler import cycler
 
 
 # Set up the logger
@@ -50,13 +51,13 @@ def save_figures(data: pd.DataFrame, dir: Path, config: dict) -> list[Path]:
 
     except FileNotFoundError as e:
         logger.error(
-            "Error while saving histogram figures: Directory not found: %s", dir
+            "Error while saving histogram figures: Directory not found: %s: %s", dir, e
         )
         raise
     except PermissionError as e:
         logger.error(
-            "Error while saving histogram figures: Permission denied for directory: %s",
-            dir,
+            "Error while saving histogram figures: Permission denied for directory: %s: %s",
+            dir, e
         )
         raise
     except ValueError as e:

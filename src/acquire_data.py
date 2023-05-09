@@ -1,16 +1,17 @@
 import logging
 import sys
-import time
 from pathlib import Path
-import requests
 from time import sleep
+import requests
 from requests.exceptions import RequestException
 
 
 logger = logging.getLogger(__name__)
 
 
-def get_data(url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2) -> bytes:
+def get_data(
+    url: str, attempts: int = 4, wait: int = 3, wait_multiple: int = 2
+) -> bytes:
     """Acquires data from URL
 
     Args:

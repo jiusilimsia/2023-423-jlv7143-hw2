@@ -1,11 +1,18 @@
-FROM python:3.10.9
+# This Dockerfile defines the setup for running unit tests for the cloud classification pipeline.
 
+# 1. Use the official Python 3.10.9-slim base image for a minimal and lightweight setup.
+FROM python:3.10.9-slim
+
+# 2. Set the working directory to /app, which will contain all application files.
 WORKDIR /app
 
+# 3. Copy the requirements_unittest.txt file into the container and install the dependencies using pip.
 COPY requirements_unittest.txt .
 RUN pip install -r requirements_unittest.txt
 
+# 4. Copy the src and tests directories into the container (ensures the application code and test files are available within the container)
 COPY src src/
 COPY tests tests/
 
+# 5. Set the default command (CMD) to execute the pytest command.
 CMD ["pytest"]
