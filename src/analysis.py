@@ -33,7 +33,7 @@ def save_figures(data: pd.DataFrame, dir: Path, config: dict) -> list[Path]:
 
         # Iterate over each feature in the DataFrame
         for feat in features:
-            fig, ax = plt.subplots(figsize=(12, 8))
+            fig, ax = plt.subplots()
             # Plot a histogram for the current feature, separated by target class
             ax.hist([data[target == 0][feat].values, data[target == 1][feat].values])
             ax.set_xlabel(" ".join(feat.split("_")).capitalize())
