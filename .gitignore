@@ -9,3 +9,6 @@ models/*
 .pytest_cache/
 .venv
 artifacts/
+data/
+models/
+notebooks/
