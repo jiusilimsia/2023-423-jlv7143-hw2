@@ -25,7 +25,7 @@ No need to do it manually. **Only need to build Docker image and build&run Docke
 
 ## Docker image and container
 
-Before we started, please make sure you already configured the AWS CLI with AWS SSO.
+Before we start, please make sure you already configured the AWS CLI with AWS SSO.
 
 ### Build the Docker image
 
