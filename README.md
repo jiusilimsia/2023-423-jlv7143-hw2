@@ -18,12 +18,14 @@ The intent of this pipeline is to automate the process of obtaining, preprocessi
 
 
 ## Project set up instructions
-The setting up process of the project (installing requirements, fetching data, etc.) are included in the Dockerfile and pipeline:
+The setup process of the project (installing requirements, fetching data, etc.) are included in the Dockerfile and pipeline:
 
 No need to do it manually. **Only need to build Docker image and build&run Docker container.**
 
 
 ## Docker image and container
+
+Before we started, please make sure you already configured the AWS CLI with AWS SSO.
 
 ### Build the Docker image
 
