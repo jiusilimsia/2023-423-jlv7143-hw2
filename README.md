@@ -1,7 +1,7 @@
 # Clouds
-Northwestern MSiA Jiusi Li
+Northwestern University MSiA Jiusi Li
 
-## Overview of the pipeline
+## Overview of the Pipeline
 
 The pipeline is designed to classify clouds through a machine learning model. The pipeline involves the following steps:
 
@@ -17,14 +17,52 @@ The pipeline is designed to classify clouds through a machine learning model. Th
 
 The intent of this pipeline is to automate the process of obtaining, preprocessing, training, and evaluating a cloud classification model, while maintaining traceability and organization of the generated artifacts.
 
+## Project Structure
 
-## Project set up instructions
-The setup process of the project (installing requirements, fetching data, etc.) are included in the Dockerfile and pipeline:
+<pre>
 
-No need to do it manually. **Only need to build Docker image and build&run Docker container.**
+project
+│
+├── config
+│   ├── default-config.yaml:   Configuration for logging settings
+│   └── logging
+│       └── local.conf:   Configuration for the whole pipeline
+│
+├── dockerfiles
+│   ├── Dockerfile:   Building the Docker image used to run the main model pipeline
+│   └── Dockerfile_unittest (for unit test only):   Building the Docker image used to run unit tests
+│
+├── src
+│   ├── acquire_data.py
+│   ├── analysis.py
+│   ├── aws_utils.py
+│   ├── create_dataset.py
+│   ├── evaluate_performance.py
+│   ├── generate_features.py
+│   ├── score_model.py
+│   └── train_model.py
+│
+├── pipeline.py:   The main script that orchestrates the execution of the entire model pipeline
+├── requirements.txt:   Listing required packages and dependencies for the whole pipeline
+├── tests (for unit test only)
+│   └── generate_features_test.py:   Unit test for generate_features.py code
+└── requirements_unittest.txt (for unit test only):   Listing required packages and dependencies for running unit tests.
+
+</pre>
 
 
-## Docker image and container
+## Project Setup Instructions
+
+To retrieve the code of the project, you need to clone the repository using the following command:
+
+```bash
+git clone https://github.com/MSIA/2023-423-jlv7143-hw2.git
+```
+
+The setup process for running the project (installing requirements, fetching data, etc.), refer to the **Docker image and container** section.
+
+
+## Docker Image and Container
 
 Before we start, please make sure you already configured the AWS CLI with AWS SSO.
 
