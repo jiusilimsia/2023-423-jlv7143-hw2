@@ -61,13 +61,13 @@ git clone https://github.com/MSIA/2023-423-jlv7143-hw2.git
 
 ### To run the pipeline in your local machine:
 
-- First login to refresh credentials
+- First, login to refresh credentials
 
     ```shell
     aws sso login --profile <your_aws_profile_name>
     ```
 
-- Then set up our python environment
+- Then, set up our python environment
 
     ```shell
     python3 -m venv .venv
@@ -75,7 +75,7 @@ git clone https://github.com/MSIA/2023-423-jlv7143-hw2.git
     pip install -r requirements.txt
     ```
 
-- Finally authenticate your boto3 calls and run the pipeline with the command below:
+- Finally, authenticate your boto3 calls and run the pipeline with the command below:
 
     ```shell
     export AWS_PROFILE=<your_aws_profile_name>
